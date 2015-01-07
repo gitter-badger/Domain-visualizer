@@ -1,0 +1,28 @@
+{
+    "name": "Environment checker",
+    "version": "0.1",
+    "description": "Check your current env for you.",
+    "browser_action":	{
+        "default_icon": "icon.png"
+    },
+    "icons":{
+        "128":"icon_128.png"
+    },
+    "manifest_version": 2,
+     "options_page": "options.html",
+     "permissions": [
+    	"storage",
+     	"tabs"
+  ],
+    "web_accessible_resources": [
+
+  ],
+  "content_scripts":
+   [
+  	{
+     	    "js": [ "jquery.min.js", "background.js" ],
+   	    "matches": [ "http://*/*", "https://*/*"]
+	}
+    ]
+  
+}
