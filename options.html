@@ -2,117 +2,139 @@
 <html>
 <head>
 	<title>Environment checker options</title>
-	 <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap -->
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
 </head>
 <body>
 
 
- <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <p class="lead">Environment checker</p>
-                <div class="list-group">
-                    <a href="#" class="list-group-item active">Active Environments</a>
-                    <a href="#" class="list-group-item">Options</a>
-                    <a href="#" class="list-group-item">Import/Export</a>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="thumbnail">
-                    <div class="caption-full">
-										<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-											<div class="panel panel-default">
-												<div class="panel-heading" role="tab" id="headingOne">
-													<h4 class="panel-title">
-														<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-															Active envs
-														</a>
-													</h4>
-												</div>
-												<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-													<div class="panel-body">
-														<button class="btn btn-success pull-right">+</button>
-														<table class="table table-striped">	
-														<thead>
-															<th>Name</th>
-															<th>URL</th>
-															<th>Color</th>
-															<th>&nbsp;</th>
-														</thead>
-													<tbody id="table-body">
-													</tbody>
-													</table>
-													</div>
-												</div>
-											</div>
-                     </div>
-								 </div>
-                <div class="well">
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-									<form class="form-horizontal" role="form">
-								 <div class="form-group">
-									<label for="inputPassword" class="col-sm-2 control-label">Name</label>
-									<div class="col-sm-5">
-										<input type="text" class="form-control" id="project" placeholder="Example: Project test">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<p class="lead">Environment checker</p>
+				<div class="list-group">
+					<a href="#" class="list-group-item active">Active Environments</a>
+					<a href="#" class="list-group-item">Options</a>
+					<a href="#" class="list-group-item">Import/Export</a>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="thumbnail">
+					<div class="caption-full">
+						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="headingOne">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											Active envs
+										</a>
+									</h4>
+								</div>
+								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+									<div class="panel-body">
+										<button id="add-env-btn" class="btn btn-success pull-right" data-toggle="modal" data-target="#add-env-modal">+</button>
+										<table class="table table-striped">	
+											<thead>
+												<th>Name</th>
+												<th>URL</th>
+												<th>Color</th>
+												<th>&nbsp;</th>
+											</thead>
+											<tbody id="table-body">
+											</tbody>
+										</table>
 									</div>
 								</div>
-							 <div class="form-group">
-									<label for="inputPassword" class="col-sm-2 control-label">URL</label>
-									<div class="col-sm-5">
-										<input type="text" class="form-control" id="url" placeholder="Example: http://192.168.178.230">
-									</div>
-								</div>	
-							 <div class="form-group">
-									<label for="inputPassword" class="col-sm-2 control-label">Color</label>
-									<div class="col-sm-5">
-										<input type="text" class="form-control" id="color" placeholder="#997822">
-									</div>
-											<button class="btn btn-success" id="save">Add</button>
-								</div>	
-							</form>
 							</div>
-<div id="status"></div>
+						</div>
+					</div>
+					<!-- <div class="caption-full">
+						<div class="panel-group" id="options" role="tablist" aria-multiselectable="true">
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="options">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#options" href="#options" aria-expanded="true" aria-controls="collapseOne">
+											Options
+										</a>
+									</h4>
+								</div>
+								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="options">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-lg-4">
+												Enable Environment checker to discover a json file in the root of the webserver.
+												this file has to be called env-chk.json
+											</div>
+											<div class="col-lg-4">
+												<input type="checkbox"> Enable root discovery
+											</div>
+											<div class="col-lg-4">
+												<b>Example:</b><br/>
+												env-chck.json<br/>
+												<code>
+												{
+													"color" : "red",
+													"name"	: "Production"
+												}
+												</code>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</div>			
+		</div>
 
-                         </div>
-                    </div>
-
-                    <hr>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-    <!-- /.container -->
-
-    <div class="container">
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-
-<script src="jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="options.js"></script>
+	</div>
+	<!-- /.container -->
+	<hr>
+	<!-- Modal -->
+	<div class="modal fade" id="add-env-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Name</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="project" placeholder="Example: Project test" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">URL</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="url" placeholder="Example: http://192.168.178.230" required>
+							</div>
+						</div>	
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Color</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="color" placeholder="#997822" required>
+							</div>
+						</div>	
+					</form>
+					<div id="status"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-success" data-dismiss="modal" id="save">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="options.js"></script>
 </body>
 </html>
