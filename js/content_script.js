@@ -1,8 +1,8 @@
 chrome.storage.sync.get({"option-root-disc": false}, function(result) {
 	var discover = result["option-root-disc"];
-	var baseUrl = stripUrl(document.URL);
+	var baseUrl = stripUrl(document.URL);;
 	if(discover) {
-	    $.getJSON(baseUrl +'/~mbollemeijer/chck-env.json', function(d) {
+	    $.getJSON(baseUrl +'/chck-env.json', function(d) {
 	        insertHtmlInDom(d);
 	    }).fail( function(d, textStatus, error) {
 	    	console.log('Debug: ', 'could not find json, moving on to local storage check');
@@ -15,6 +15,7 @@ chrome.storage.sync.get({"option-root-disc": false}, function(result) {
 
 function checkLocalStorage() {
 	chrome.storage.sync.get({ sites: {} }, function(items) {
+	console.log(items);
 	 var url = document.URL.split('/')[2].replace('www.', '');
 	 $.each(items.sites, function(key, value) {
 		 var storedEnvKey = key.split('/')[2].replace('www.','');
@@ -33,7 +34,8 @@ function stripUrl(url) {
 
 function insertHtmlInDom(param)
 {
-	if(param.custom_html == false) {
+	console.log(param);
+	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
     	$('body').prepend('<div style="text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
 		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="padding-top: 15px;">'+param.name+'</div></div>');
 	} else {
