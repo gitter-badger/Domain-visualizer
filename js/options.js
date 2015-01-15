@@ -92,6 +92,10 @@ function setInputColorBackground(el) {
   $(el).css('background-color', $(el).val());
 }
 
+function resetInputColorBackground(el) {
+  $(el).css('background-color', '');
+}
+
 function removeOption(key) {
 chrome.storage.sync.get({'sites': []}, function(result) {
     var sites = result.sites;
@@ -108,7 +112,6 @@ chrome.storage.sync.get({'sites': []}, function(result) {
       });
   });
 }
-
 
 document.addEventListener('DOMContentLoaded', restore_options);
 
@@ -148,4 +151,9 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#project').val("");
     $('#height').val("");
     $('#width').val("");
+
+    // Reset background colors input field.
+    resetInputColorBackground('#backgroundcolor');
+    resetInputColorBackground('#textcolor');
+
 });
