@@ -81,7 +81,15 @@ function showEditModal(key, entry) {
   $('#height').val(entry.height);
   $('#width').val(entry.width);
 
+  // set colors
+  setInputColorBackground('#textcolor');
+  setInputColorBackground('#backgroundcolor');
+
   $('#add-env-modal').modal('show');
+}
+
+function setInputColorBackground(el) {
+  $(el).css('background-color', $(el).val());
 }
 
 function removeOption(key) {
@@ -130,4 +138,14 @@ $('#option-root-disc').click(function() {
             console.log(result);
         });
     });
+});
+
+$('#add-env-modal').on('hidden.bs.modal', function () {
+    $('#url').val("");
+    $('#url').prop("readonly",false);
+    $('#backgroundcolor').val("");
+    $('#textcolor').val("");
+    $('#project').val("");
+    $('#height').val("");
+    $('#width').val("");
 });
