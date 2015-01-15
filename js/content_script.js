@@ -37,7 +37,7 @@ function insertHtmlInDom(param)
 	console.log(param);
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
     	$('body').prepend('<div style="text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
-		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="padding-top: 15px;">'+param.name+'</div></div>');
+		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+';">'+param.name+'</div></div>');
 	} else {
 		$('body').prepend(param.custom_html);
 	}
