@@ -39,6 +39,6 @@ function insertHtmlInDom(param)
     	$('body').prepend('<div style="text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
 		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
 	} else {
-		$('body').prepend(param.custom_html);
+		$('body').prepend(JSON.parse(param.custom_html));
 	}
 }

@@ -9,18 +9,14 @@ function save_options() {
           'textColor' : $('#textcolor').val(),
           'name' : $('#project').val(),
           'height': $('#height').val(),
-          'width' : $('#width').val()
+          'width' : $('#width').val(),
+          'custom_html' : $("#enableCustomHtml").is(':checked') ? JSON.stringify($('#custom_html').val()) : false
       };
     
     chrome.storage.sync.set({sites: sites}, function () {
-        chrome.storage.sync.get({sites : {}}, function (result) {
-        displayEnvs(result.sites);
-        var status = document.getElementById('status');
-              status.textContent = 'Options saved.';
-              setTimeout(function() {
-              status.textContent = '';
-            }, 750);
-          });
+          chrome.storage.sync.get({sites : {}}, function (result) {
+          displayEnvs(result.sites);
+        });
       });
   });
 }
@@ -80,12 +76,29 @@ function showEditModal(key, entry) {
   $('#project').val(entry.name);
   $('#height').val(entry.height);
   $('#width').val(entry.width);
+  $('#save').html('Save');
+  
+  if(entry.custom_html != false) {
+    $('#enableCustomHtml').prop('checked', true);
+    $('#custom_html').val(JSON.parse(entry.custom_html));
+    $('#custom-html-group').show();
+
+    makeFieldReadonly(true);
+  }
 
   // set colors
   setInputColorBackground('#textcolor');
   setInputColorBackground('#backgroundcolor');
 
   $('#add-env-modal').modal('show');
+}
+
+function makeFieldReadonly(bool)
+{
+    $('#backgroundcolor').prop("readonly",bool);
+    $('#textcolor').prop("readonly",bool);
+    $('#height').prop("readonly",bool);
+    $('#width').prop("readonly",bool);
 }
 
 function setInputColorBackground(el) {
@@ -118,16 +131,31 @@ document.addEventListener('DOMContentLoaded', restore_options);
 // Prepare other js functionalities
 document.addEventListener('DOMContentLoaded', function() {
   $('.color-box').colpick({
-  colorScheme:'dark',
-  layout:'rgbhex',
-  color:'#ffffff',
-  onSubmit:function(hsb,hex,rgb,el) {
-    $(el).css('background-color', '#'+hex);
-    $(el).colpickHide();
-    $(el).val('#'+hex);
-  }
+      colorScheme:'dark',
+      layout:'rgbhex',
+      color:'#ffffff',
+      onSubmit:function(hsb,hex,rgb,el) {
+        $(el).css('background-color', '#'+hex);
+        $(el).colpickHide();
+        $(el).val('#'+hex);
+    }
+  })
+  .css('background-color', '#ffffff');
+
+  $('.color-box').focus(function() {
+      $(this).colpickShow();
+  });
+
+  $('#enableCustomHtml').change(function() {
+    if(this.checked) {
+        makeFieldReadonly(true);
+        $('#custom-html-group').show();
+    } else {
+        $('#custom-html-group').hide();
+        makeFieldReadonly(false);
+
+    }
 })
-.css('background-color', '#ffffff');  
 });
 
 $('#save').on('click', function(e) {
@@ -151,7 +179,12 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#project').val("");
     $('#height').val("");
     $('#width').val("");
+    $('#custom_html').val('');
+    $('#enableCustomHtml').prop('checked', false);
+    $('#save').html('Add');
+    $('#custom-html-group').hide();
 
+    makeFieldReadonly(false);
     // Reset background colors input field.
     resetInputColorBackground('#backgroundcolor');
     resetInputColorBackground('#textcolor');
