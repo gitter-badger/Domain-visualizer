@@ -36,8 +36,14 @@ function insertHtmlInDom(param)
 {
 	console.log(param);
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
-    	$('body').prepend('<div style="text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
+    	$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
 		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
+
+    	var bodyPadding = parseInt($('body').css('padding-top').replace('px', ''));
+    	console.log(bodyPadding);    	
+    	bodyPadding = bodyPadding + parseInt(param.height.replace('px', ''));
+    	console.log(bodyPadding);    	
+    	$('body').css('padding-top', bodyPadding + 'px');
 	} else {
 		$('body').prepend(param.custom_html);
 	}
