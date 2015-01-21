@@ -13,3 +13,7 @@
 .colpick {
 	z-index: 999999;
 }
+
+#custom-html-group {
+	display: none;
+}

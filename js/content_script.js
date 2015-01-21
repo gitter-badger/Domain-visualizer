@@ -45,6 +45,6 @@ function insertHtmlInDom(param)
     	console.log(bodyPadding);    	
     	$('body').css('padding-top', bodyPadding + 'px');
 	} else {
-		$('body').prepend(param.custom_html);
+		$('body').prepend(JSON.parse(param.custom_html));
 	}
 }
