@@ -33,11 +33,10 @@ function stripUrl(url) {
 function insertHtmlInDom(param)
 {
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
-    	$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
+    		$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
 		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
-    	var bodyPadding = parseInt($('body').css('padding-top').replace('px', ''));
-    	bodyPadding = bodyPadding + parseInt(param.height.replace('px', ''));
-    	$('body').css('padding-top', bodyPadding + 'px');
+			$('body').prepend('<div style="height: ' + param.height + ';">&nbsp;</div>');
+
 	} else {
 		$('body').prepend(JSON.parse(param.custom_html));
 	}
