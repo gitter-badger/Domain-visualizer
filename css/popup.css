@@ -1,0 +1,21 @@
+body {
+	width: 300px;
+	height: auto;
+}
+
+a:hover, a:active, a:focus {
+    outline: none;
+    border: 0;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.list-group-item, .list-group-item:first-child, 
+.list-group-item:last-child, 
+a.list-group-item:hover, a.list-group-item:focus,
+.list-group-item:first-child  {
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}

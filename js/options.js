@@ -155,7 +155,17 @@ document.addEventListener('DOMContentLoaded', function() {
         makeFieldReadonly(false);
 
     }
-})
+  });
+
+  $('#btn-show-add-group-modal').on('click', function(event) {
+      event.preventDefault();  
+      $('#add-group-modal').modal('show');
+  }); 
+
+  $('#btn-save-new-group').on('click', function(event) {
+      console.log($('#input-new-group').val());
+    
+  });
 });
 
 $('#save').on('click', function(e) {
@@ -188,5 +198,4 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     // Reset background colors input field.
     resetInputColorBackground('#backgroundcolor');
     resetInputColorBackground('#textcolor');
-
 });

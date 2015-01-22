@@ -5,7 +5,6 @@ chrome.storage.sync.get({"option-root-disc": false}, function(result) {
 	    $.getJSON(baseUrl +'/chck-env.json', function(d) {
 	        insertHtmlInDom(d);
 	    }).fail( function(d, textStatus, error) {
-	    	console.log('Debug: ', 'could not find json, moving on to local storage check');
 	        checkLocalStorage();
 	    });
 	} else {
@@ -15,7 +14,6 @@ chrome.storage.sync.get({"option-root-disc": false}, function(result) {
 
 function checkLocalStorage() {
 	chrome.storage.sync.get({ sites: {} }, function(items) {
-	console.log(items);
 	 var url = document.URL.split('/')[2].replace('www.', '');
 	 $.each(items.sites, function(key, value) {
 		 var storedEnvKey = key.split('/')[2].replace('www.','');
@@ -34,15 +32,11 @@ function stripUrl(url) {
 
 function insertHtmlInDom(param)
 {
-	console.log(param);
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
     	$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
 		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
-
     	var bodyPadding = parseInt($('body').css('padding-top').replace('px', ''));
-    	console.log(bodyPadding);    	
     	bodyPadding = bodyPadding + parseInt(param.height.replace('px', ''));
-    	console.log(bodyPadding);    	
     	$('body').css('padding-top', bodyPadding + 'px');
 	} else {
 		$('body').prepend(JSON.parse(param.custom_html));

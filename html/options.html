@@ -56,12 +56,12 @@
 							<div class="panel panel-default">
 								<div class="panel-heading" role="tab" id="options">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#options" href="#options" aria-expanded="true" aria-controls="collapseOne">
+										<a data-toggle="collapse" data-parent="#options" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
 											Options
 										</a>
 									</h4>
 								</div>
-								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="options">
+								<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="options">
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-lg-4">
@@ -110,33 +110,43 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Name</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" id="project" placeholder="Example: Project test" required>
+								<input type="text" class="form-control" id="project" placeholder="Example: Project test" >
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-2 control-label">Group</label>
+							<div class="col-sm-8">
+								<select class="form-control">
+									<option>Default</option>
+								</select> 
+							</div>
+							<button id="btn-show-add-group-modal" class="btn btn-success" data-toggle="modal">+</button>
+						</div>
+
+						<div class="form-group">
 							<label class="col-sm-2 control-label">URL</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" id="url" placeholder="Example: http://192.168.178.230" required>
+								<input type="text" class="form-control" id="url" placeholder="Example: http://192.168.178.230" >
 							</div>
 						</div>	
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Background color</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control color-box" id="backgroundcolor" placeholder="#997822" required>
+								<input type="text" class="form-control color-box" id="backgroundcolor" placeholder="#997822">
 							</div>
 							<label class="col-sm-2 control-label">Text color</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control color-box" id="textcolor" placeholder="#997822" required>
+								<input type="text" class="form-control color-box" id="textcolor" placeholder="#997822">
 							</div>
 						</div>	
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Height</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="height" placeholder="50px" required>
+								<input type="text" class="form-control" id="height" placeholder="50px">
 							</div>
 							<label class="col-sm-3 control-label">Width</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="width" placeholder="100%" required>
+								<input type="text" class="form-control" id="width" placeholder="100%">
 							</div>
 						</div>
 						<div class="form-group" id="custom-html-group">
@@ -155,6 +165,31 @@
 			</div>
 		</div>
 	</div>
+	<div id="add-group-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add new group</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Group</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="input-new-group" placeholder="Example: Project name" required>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-success" data-dismiss="modal" id="btn-save-new-group">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="../js/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.min.js"></script>
 	<script src="../js/colpick.js" type="text/javascript"></script>
