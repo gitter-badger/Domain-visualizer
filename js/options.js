@@ -7,6 +7,7 @@ function save_options() {
       sites[inputUrl] = {
           'backgroundColor' : $('#backgroundcolor').val(),
           'textColor' : $('#textcolor').val(),
+          'textSize' : $('#textsize').val(),
           'name' : $('#project').val(),
           'height': $('#height').val(),
           'width' : $('#width').val(),
@@ -73,6 +74,7 @@ function showEditModal(key, entry) {
   $('#url').prop("readonly",true);
   $('#backgroundcolor').val(entry.backgroundColor);
   $('#textcolor').val(entry.textColor);
+  $('#textsize').val(entry.textSize);
   $('#project').val(entry.name);
   $('#height').val(entry.height);
   $('#width').val(entry.width);
@@ -97,6 +99,7 @@ function makeFieldReadonly(bool)
 {
     $('#backgroundcolor').prop("readonly",bool);
     $('#textcolor').prop("readonly",bool);
+    $('#textsize').prop("readonly",bool);
     $('#height').prop("readonly",bool);
     $('#width').prop("readonly",bool);
 }
@@ -176,6 +179,7 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#url').prop("readonly",false);
     $('#backgroundcolor').val("");
     $('#textcolor').val("");
+    $('#textsize').val("");
     $('#project').val("");
     $('#height').val("");
     $('#width').val("");

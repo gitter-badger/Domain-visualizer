@@ -36,8 +36,8 @@ function insertHtmlInDom(param)
 {
 	console.log(param);
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
-    	$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
-		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
+    	$('body').prepend('<div class="environmentblock" style="position: fixed; z-index: 900000000; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+'; background-color: '
+		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: '+param.textSize+';">'+param.name+'</div></div>');
 
     	var bodyPadding = parseInt($('body').css('padding-top').replace('px', ''));
     	console.log(bodyPadding);    	
