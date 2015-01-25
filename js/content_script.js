@@ -33,10 +33,13 @@ function stripUrl(url) {
 function insertHtmlInDom(param)
 {
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
-    		$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
-		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
-			$('body').prepend('<div style="height: ' + param.height + ';">&nbsp;</div>');
-
+		$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
+	    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
+		$('body').prepend('<div style="height: ' + param.height + ';">&nbsp;</div>');
+		
+		$(document).scroll(function() {
+		    $('.environmentblock').css({opacity: $(this).scrollTop() > 5? 0.8:1});
+		});
 	} else {
 		$('body').prepend(JSON.parse(param.custom_html));
 	}
