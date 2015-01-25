@@ -36,10 +36,9 @@ function displayEnvs(items)
 {
     // Empty table
     $('#table-body').empty();
-    
     // add every stores env
     $.each(items, function(key, value) {
-        $('#table-body').append('<tr><td>'+value.name+'</td><td>'+ key + '</td><td><button class="btn btn-primary edit-entry" id="'+ key +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&nbsp;<button class="remove btn btn-danger" id="'+ key +'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>');
+        $('#table-body').append('<tr><td><input type="checkbox" id="' + key + '"></td><td>' + value.name + '</td><td>' + key + '</td><td><button class="btn btn-primary edit-entry" id="'+ key +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&nbsp;<button class="remove btn btn-danger" id="'+ key +'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>');
     });
 
     // bind listeners for removing item
@@ -156,14 +155,36 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         $('#custom-html-group').hide();
         makeFieldReadonly(false);
-
     }
-})
+  })
 });
 
 $('#save').on('click', function(e) {
     e.preventDefault();
     save_options();
+});
+
+$('#button-export').on('click', function(e) {
+    e.preventDefault();
+    
+    var keys = Array();
+    $.each($('td input:checkbox', $('#table-body')), function() { 
+        if(this.checked) {
+          keys.push($(this).attr('id'));
+        }
+    });
+
+    if(keys.length > 0)
+        exportDomains(keys);
+});
+
+$('#button-import').on('click', function(e){
+    e.preventDefault();
+    console.log('button-import');
+});
+
+$('#checkbox-domains-all').change(function() {
+  $('td input:checkbox', $('#table-body')).prop('checked',this.checked);
 });
 
 $('#option-root-disc').click(function() {
@@ -172,6 +193,29 @@ $('#option-root-disc').click(function() {
             console.log(result);
         });
     });
+});
+
+function exportDomains(keys) {
+  //get all domains
+  chrome.storage.sync.get({sites: {}}, function(result) {
+        
+      // determine wich domains have to be exported
+      var domainsForExport = {};
+      keys.forEach(function(entry) {
+          domainsForExport[entry] = result.sites[entry];
+      });
+
+      createJsonForExport(domainsForExport);
+  });
+}
+
+function createJsonForExport(domainList) {
+  $('.code-export-json').append(JSON.stringify(domainList, null, '\t'));
+  $('#modal-impExp').modal('show');
+}
+
+$('#modal-impExp').on('hidden.bs.modal', function () {
+  $('.code-export-json').empty();
 });
 
 $('#add-env-modal').on('hidden.bs.modal', function () {
