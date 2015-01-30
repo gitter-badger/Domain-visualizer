@@ -14,6 +14,7 @@ chrome.storage.sync.get({"option-root-disc": false}, function(result) {
 
 function checkLocalStorage() {
 	chrome.storage.sync.get({ sites: {} }, function(items) {
+	console.log(items);
 	 var url = document.URL.split('/')[2].replace('www.', '');
 	 $.each(items.sites, function(key, value) {
 		 var storedEnvKey = key.split('/')[2].replace('www.','');
@@ -32,14 +33,14 @@ function stripUrl(url) {
 
 function insertHtmlInDom(param)
 {
+	// $(document).scroll(function() {
+	//     $('.environmentblock').css({opacity: $(this).scrollTop() > 5? 0.8:1});
+	// });
+
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
-		$('body').prepend('<div style="position: absolute; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+';font-size: xx-large; background-color: '
-	    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: 22pt;">'+param.name+'</div></div>');
+    	$('body').prepend('<div class="environmentblock" style="transition: 1s; position: absolute; z-index: 900000000; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+'; background-color: '
+		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: '+param.textSize+';">'+param.name+'</div></div>');
 		$('body').prepend('<div style="height: ' + param.height + ';">&nbsp;</div>');
-		
-		$(document).scroll(function() {
-		    $('.environmentblock').css({opacity: $(this).scrollTop() > 5? 0.8:1});
-		});
 	} else {
 		$('body').prepend(JSON.parse(param.custom_html));
 	}

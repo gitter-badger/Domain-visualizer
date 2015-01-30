@@ -38,7 +38,7 @@ function displayEnvs(items)
     $('#table-body').empty();
     // add every stores env
     $.each(items, function(key, value) {
-        $('#table-body').append('<tr><td><input type="checkbox" id="' + key + '"></td><td>' + value.name + '</td><td>' + key + '</td><td><button class="btn btn-primary edit-entry" id="'+ key +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&nbsp;<button class="remove btn btn-danger" id="'+ key +'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>');
+        $('#table-body').append('<tr><td>' + value.name + '</td><td>' + key + '</td><td><button class="btn btn-primary edit-entry" id="'+ key +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&nbsp;<button class="remove btn btn-danger" id="'+ key +'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>');
     });
 
     // bind listeners for removing item
@@ -78,7 +78,8 @@ function showEditModal(key, entry) {
   $('#height').val(entry.height);
   $('#width').val(entry.width);
   $('#save').html('Save');
-  
+  $('#add-dmn-lbl').text('Edit domain');
+
   if(entry.custom_html != false) {
     $('#enableCustomHtml').prop('checked', true);
     $('#custom_html').val(JSON.parse(entry.custom_html));
@@ -166,9 +167,41 @@ $('#save').on('click', function(e) {
 
 $('#button-export').on('click', function(e) {
     e.preventDefault();
+    console.log('export');
+    $('#modal-impExp').modal('show');
+        // Empty table
+    $('#table-body-export').empty();
     
+    // add every stores env
+    chrome.storage.sync.get({sites : {}}, function (result) {
+    $.each(result.sites, function(key, value) {
+        $('#table-body-export').append('<tr><td><input type="checkbox" id="'+key+'"></td><td>' + value.name + '</td><td>' + key + '</td><td></tr>');
+      });
+    });
+        
+
+});
+
+$('#button-import').on('click', function(e){
+    e.preventDefault();
+    $('#modal-impExp-body').empty();
+    $('#button-download').hide();
+    $('#button-import-json').show();
+    $('#impExp-label').text('Paste the json and click import below, or click select file and import.');
+    $('#modal-impExp-body').append('<textarea  class="form-control" id="text-import-json" cols="50" rows="5"></textarea>');
+    $('#modal-impExp').modal('show');
+    $('#button-import-json').on('click', function() {
+        console.log($('#text-import-json').val());
+    });
+});
+
+$('#checkbox-domains-all').change(function() {
+  $('td input:checkbox', $('#table-body-export')).prop('checked',this.checked);
+});
+
+$('#button-download').on('click', function() {
     var keys = Array();
-    $.each($('td input:checkbox', $('#table-body')), function() { 
+    $.each($('td input:checkbox', $('#table-body-export')), function() { 
         if(this.checked) {
           keys.push($(this).attr('id'));
         }
@@ -176,15 +209,6 @@ $('#button-export').on('click', function(e) {
 
     if(keys.length > 0)
         exportDomains(keys);
-});
-
-$('#button-import').on('click', function(e){
-    e.preventDefault();
-    console.log('button-import');
-});
-
-$('#checkbox-domains-all').change(function() {
-  $('td input:checkbox', $('#table-body')).prop('checked',this.checked);
 });
 
 $('#option-root-disc').click(function() {
@@ -205,18 +229,17 @@ function exportDomains(keys) {
           domainsForExport[entry] = result.sites[entry];
       });
 
-      createJsonForExport(domainsForExport);
+      download('export-'+ new Date().getTime() + '.json', JSON.stringify(domainsForExport, null, '\t'));
+      $('#checkbox-domains-all').prop('checked', false);
   });
 }
 
-function createJsonForExport(domainList) {
-  $('.code-export-json').append(JSON.stringify(domainList, null, '\t'));
-  $('#modal-impExp').modal('show');
+function download(filename, text) {
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  pom.setAttribute('download', filename);
+  pom.click();
 }
-
-$('#modal-impExp').on('hidden.bs.modal', function () {
-  $('.code-export-json').empty();
-});
 
 $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#url').val("");
@@ -231,6 +254,7 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#enableCustomHtml').prop('checked', false);
     $('#save').html('Add');
     $('#custom-html-group').hide();
+    $('#add-dmn-lbl').text('Add domain');
 
     makeFieldReadonly(false);
     // Reset background colors input field.
