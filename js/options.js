@@ -187,11 +187,11 @@ $('#button-import').on('click', function(e){
     $('#modal-impExp-body').empty();
     $('#button-download').hide();
     $('#button-import-json').show();
-    $('#impExp-label').text('Paste the json and click import below, or click select file and import.');
-    $('#modal-impExp-body').append('<textarea  class="form-control" id="text-import-json" cols="50" rows="5"></textarea>');
+    $('#impExp-label').text('Select file to import.');
+    $('#modal-impExp-body').append('<input type="file" id="file-import">');
     $('#modal-impExp').modal('show');
     $('#button-import-json').on('click', function() {
-        console.log($('#text-import-json').val());
+          startRead();
     });
 });
 
@@ -262,3 +262,56 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     resetInputColorBackground('#textcolor');
 
 });
+
+function startRead() {  
+  // obtain input element through DOM 
+  
+  var file = document.getElementById('file-import').files[0];
+  if(file){
+    getAsText(file);
+  }
+}
+
+function getAsText(readFile) {
+        
+  var reader = new FileReader();
+  
+  // Read file into memory as UTF-16      
+  reader.readAsText(readFile, "UTF-8");
+  
+  // Handle progress, success, and errors
+  reader.onprogress = updateProgress;
+  reader.onload = loaded;
+  reader.onerror = errorHandler;
+}
+
+function updateProgress(evt) {
+  if (evt.lengthComputable) {
+    // evt.loaded and evt.total are ProgressEvent properties
+    var loaded = (evt.loaded / evt.total);
+    if (loaded < 1) {
+      // Increase the prog bar length
+      // style.width = (loaded * 200) + "px";
+    }
+  }
+}
+
+function loaded(evt) {  
+  // Obtain the read file data    
+  var fileString = evt.target.result;
+  console.log(JSON.parse(fileString);
+  // Handle UTF-16 file dump
+  // if(utils.regexp.isChinese(fileString)) {
+  //   //Chinese Characters + Name validation
+  // }
+  // else {
+  //   // run other charset test
+  // }
+  // xhr.send(fileString)     
+}
+
+function errorHandler(evt) {
+  if(evt.target.error.name == "NotReadableError") {
+    // The file could not be read
+  }
+}
