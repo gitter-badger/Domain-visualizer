@@ -36,10 +36,9 @@ function displayEnvs(items)
 {
     // Empty table
     $('#table-body').empty();
-    
     // add every stores env
     $.each(items, function(key, value) {
-        $('#table-body').append('<tr><td>'+value.name+'</td><td>'+ key + '</td><td><button class="btn btn-primary edit-entry" id="'+ key +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&nbsp;<button class="remove btn btn-danger" id="'+ key +'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>');
+        $('#table-body').append('<tr><td>' + value.name + '</td><td>' + key + '</td><td><button class="btn btn-primary edit-entry" id="'+ key +'"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&nbsp;<button class="remove btn btn-danger" id="'+ key +'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>');
     });
 
     // bind listeners for removing item
@@ -79,7 +78,8 @@ function showEditModal(key, entry) {
   $('#height').val(entry.height);
   $('#width').val(entry.width);
   $('#save').html('Save');
-  
+  $('#add-dmn-lbl').text('Edit domain');
+
   if(entry.custom_html != false) {
     $('#enableCustomHtml').prop('checked', true);
     $('#custom_html').val(JSON.parse(entry.custom_html));
@@ -156,14 +156,60 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         $('#custom-html-group').hide();
         makeFieldReadonly(false);
-
     }
-})
+  })
 });
 
 $('#save').on('click', function(e) {
     e.preventDefault();
     save_options();
+});
+
+$('#button-export').on('click', function(e) {
+    e.preventDefault();
+    console.log('export');
+    $('#modal-impExp').modal('show');
+        // Empty table
+    $('#table-body-export').empty();
+    
+    // add every stores env
+    chrome.storage.sync.get({sites : {}}, function (result) {
+    $.each(result.sites, function(key, value) {
+        $('#table-body-export').append('<tr><td><input type="checkbox" id="'+key+'"></td><td>' + value.name + '</td><td>' + key + '</td><td></tr>');
+      });
+    });
+        
+
+});
+
+$('#button-import').on('click', function(e){
+    e.preventDefault();
+    $('#modal-impExp-body').empty();
+    $('#button-download').hide();
+    $('#button-import-json').show();
+    $('#impExp-label').text('Select file to import.');
+    $('#modal-impExp-body').append('<input type="file" id="file-import">');
+    $('#modal-impExp-body').append('<div class="progress" style="display: none;"> <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">   <span class="sr-only">60% Complete</span></div></div>');
+    $('#modal-impExp').modal('show');
+    $('#button-import-json').on('click', function() {
+          startRead();
+    });
+});
+
+$('#checkbox-domains-all').change(function() {
+  $('td input:checkbox', $('#table-body-export')).prop('checked',this.checked);
+});
+
+$('#button-download').on('click', function() {
+    var keys = Array();
+    $.each($('td input:checkbox', $('#table-body-export')), function() { 
+        if(this.checked) {
+          keys.push($(this).attr('id'));
+        }
+    });
+
+    if(keys.length > 0)
+        exportDomains(keys);
 });
 
 $('#option-root-disc').click(function() {
@@ -173,6 +219,28 @@ $('#option-root-disc').click(function() {
         });
     });
 });
+
+function exportDomains(keys) {
+  //get all domains
+  chrome.storage.sync.get({sites: {}}, function(result) {
+        
+      // determine wich domains have to be exported
+      var domainsForExport = {};
+      keys.forEach(function(entry) {
+          domainsForExport[entry] = result.sites[entry];
+      });
+
+      download('export-'+ new Date().getTime() + '.json', JSON.stringify(domainsForExport, null, '\t'));
+      $('#checkbox-domains-all').prop('checked', false);
+  });
+}
+
+function download(filename, text) {
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  pom.setAttribute('download', filename);
+  pom.click();
+}
 
 $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#url').val("");
@@ -187,6 +255,7 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#enableCustomHtml').prop('checked', false);
     $('#save').html('Add');
     $('#custom-html-group').hide();
+    $('#add-dmn-lbl').text('Add domain');
 
     makeFieldReadonly(false);
     // Reset background colors input field.
@@ -194,3 +263,79 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     resetInputColorBackground('#textcolor');
 
 });
+
+function startRead() {  
+  // obtain input element through DOM 
+  
+  var file = document.getElementById('file-import').files[0];
+  if(file){
+    getAsText(file);
+  }
+}
+
+function getAsText(readFile) {
+        
+  var reader = new FileReader();
+  
+  // Read file into memory as UTF-16      
+  reader.readAsText(readFile, "UTF-8");
+  
+  // Handle progress, success, and errors
+  reader.onprogress = updateProgress;
+  reader.onload = importJSON;
+  // reader.onerror = errorHandler;
+}
+
+function importJSON(evt) {
+  saveDomains(JSON.parse(evt.target.result))
+  $('.progress').hide();
+
+}
+
+function updateProgress(evt) {
+  if (evt.lengthComputable) {
+    // evt.loaded and evt.total are ProgressEvent properties
+    $('.progress').show();
+    var loaded = (evt.loaded / evt.total);
+    if (loaded < 1) {
+      // Increase the prog bar length
+      // style.width = (loaded * 200) + "px";
+      $('.progress-bar').css('width', loaded * 200 +'px');
+    }
+  }
+}
+
+function saveDomains(object) {
+      chrome.storage.sync.get({sites: {}}, function(result) {
+      var sites = result.sites;
+      $.each(object, function(key, value) {
+          sites[key] = value;
+      });
+
+    chrome.storage.sync.set({sites: sites}, function () {
+          chrome.storage.sync.get({sites : {}}, function (result) {
+          displayEnvs(result.sites);
+        });
+      });
+  });
+}
+
+// function loaded(evt) {  
+//   // Obtain the read file data    
+//   var fileString = evt.target.result;
+//   console.log(JSON.parse(fileString));
+//   // Handle UTF-16 file dump
+//   // if(utils.regexp.isChinese(fileString)) {
+//   //   //Chinese Characters + Name validation
+//   // }
+//   // else {
+//   //   // run other charset test
+//   // }
+//   // xhr.send(fileString)     
+// }
+
+// function errorHandler(evt) {
+//   if(evt.target.error.name == "NotReadableError") {
+//     // The file could not be read
+//   }
+// }

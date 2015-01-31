@@ -14,6 +14,7 @@ chrome.storage.sync.get({"option-root-disc": false}, function(result) {
 
 function checkLocalStorage() {
 	chrome.storage.sync.get({ sites: {} }, function(items) {
+	console.log(items);
 	 var url = document.URL.split('/')[2].replace('www.', '');
 	 $.each(items.sites, function(key, value) {
 		 var storedEnvKey = key.split('/')[2].replace('www.','');
