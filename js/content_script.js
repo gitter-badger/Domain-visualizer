@@ -33,12 +33,19 @@ function stripUrl(url) {
 
 function insertHtmlInDom(param)
 {
-	// $(document).scroll(function() {
-	//     $('.environmentblock').css({opacity: $(this).scrollTop() > 5? 0.8:1});
-	// });
-
+	$(document).scroll(function() {
+		if($(this).scrollTop() > 5){
+		    $('.environmentblock').css("opacity", "0.6");
+			$('.environmentblock').css("transition", "1s");
+			$('.environmentblock').css("pointer-events", "none");
+		} else {
+		 	$('.environmentblock').css("opacity", "1");
+		 	$('.environmentblock').css("pointer-events", "auto");
+		}
+	});
+	console.log(param);
 	if(!param.hasOwnProperty('custom_html') || param.custom_html == false) {
-    	$('body').prepend('<div class="environmentblock" style="transition: 1s; position: absolute; z-index: 900000000; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+'; background-color: '
+    	$('body').prepend('<div class="environmentblock" style="position: fixed; z-index: 900000000; top: 0px; left: 0px; right: 0px; text-align: center; vertical-align: middle;color: '+param.textColor+'; background-color: '
 		    +param.backgroundColor+'; width: '+param.width+ ';height: '+param.height+';"><div style="line-height: '+param.height+'; font-size: '+param.textSize+';">'+param.name+'</div></div>');
 		$('body').prepend('<div style="height: ' + param.height + ';">&nbsp;</div>');
 	} else {
