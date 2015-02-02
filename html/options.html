@@ -15,8 +15,10 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div style="text-align: center;">
-					<img height="250px" width="250px" src="../img/icon.png"/>
+					<img height="250px" width="250px" src="../img/icon_512x512.png"/>
 					<h4>Domain visualizer</h4>
+					<hr>
+					© 2015 Maikel Bollemeijer
 				</div>
 			</div>
 			<div class="col-md-9">
@@ -64,33 +66,32 @@
 							<div class="panel panel-default">
 								<div class="panel-heading" role="tab" id="options">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#options" href="#options" aria-expanded="true" aria-controls="collapseOne">
+										<a data-toggle="collapse" data-parent="#options" href="#optionsPanel" aria-expanded="true" aria-controls="collapseOne">
 											Options
 										</a>
 									</h4>
 								</div>
-								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="options">
+								<div id="optionsPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="options">
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-lg-4">
 												Enable Environment checker to discover a json file in the root of the webserver.
-												this file has to be called env-chk.json
+												this file has to be called chck-domain.json
 											</div>
 											<div class="col-lg-4">
 												<input type="checkbox" id="option-root-disc"> Enable root discovery
 											</div>
 											<div class="col-lg-4">
 												<b>Example:</b><br/>
-												chck-env.json<br/>
+												chck-domain.json<br/>
 												<code>
-												{
-												    "backgroundColor": "red",
-												    "textColor" : "#ffffff",
-												    "textSize" : "1em",
-												    "name": "test",
-												    "custom_html": false,
-												    "height": "50px",
-												    "width": "100%"
+												 {
+													"backgroundColor": "#ff0000",
+													"custom_html": false,
+													"height": "50px",
+													"name": "Production",
+													"textColor": "#ffffff",
+													"width": "100%"
 												}
 												</code>
 											</div>
@@ -105,7 +106,7 @@
 		</div>
 	</div>
 	<!-- /.container -->
-	<hr>
+
 	<!-- Modal -->
 	<div class="modal fade" id="add-env-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

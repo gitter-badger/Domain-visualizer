@@ -2,7 +2,7 @@ chrome.storage.sync.get({"option-root-disc": false}, function(result) {
 	var discover = result["option-root-disc"];
 	var baseUrl = stripUrl(document.URL);;
 	if(discover) {
-	    $.getJSON(baseUrl +'/chck-env.json', function(d) {
+	    $.getJSON(baseUrl +'/chck-domain.json', function(d) {
 	        insertHtmlInDom(d);
 	    }).fail( function(d, textStatus, error) {
 	        checkLocalStorage();

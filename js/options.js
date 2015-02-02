@@ -1,6 +1,5 @@
-// Saves options to chrome.storage
-function save_options() {
-  
+// Saves options to chrome.storage 
+function save_options() {  
   var inputUrl = $('#url').val();
   chrome.storage.sync.get({sites: {}}, function(result) {
       var sites = result.sites;
@@ -175,7 +174,7 @@ $('#button-export').on('click', function(e) {
     // add every stores env
     chrome.storage.sync.get({sites : {}}, function (result) {
     $.each(result.sites, function(key, value) {
-        $('#table-body-export').append('<tr><td><input type="checkbox" id="'+key+'"></td><td>' + value.name + '</td><td>' + key + '</td><td></tr>');
+        $('#table-body-export').append('<tr><td><input type="checkbox" id="'+key+'"></td><td>' + value.name + '</td><td>' + key + '</td></tr>');
       });
     });
         
@@ -264,6 +263,12 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
 
 });
 
+$('#modal-impExp').on('hidden.bs.modal', function() {
+    $('#modal-impExp-body').empty();
+    $('#impExp-label').text('Export');
+    $('#modal-impExp-body').append('<table class="table table-striped"><thead><th><input type="checkbox" id="checkbox-domains-all"/></th><th>Name</th><th>URL</th><tbody id="table-body-export"></tbody></table>');
+});
+
 function startRead() {  
   // obtain input element through DOM 
   
@@ -319,23 +324,3 @@ function saveDomains(object) {
       });
   });
 }
-
-// function loaded(evt) {  
-//   // Obtain the read file data    
-//   var fileString = evt.target.result;
-//   console.log(JSON.parse(fileString));
-//   // Handle UTF-16 file dump
-//   // if(utils.regexp.isChinese(fileString)) {
-//   //   //Chinese Characters + Name validation
-//   // }
-//   // else {
-//   //   // run other charset test
-//   // }
-//   // xhr.send(fileString)     
-// }
-
-// function errorHandler(evt) {
-//   if(evt.target.error.name == "NotReadableError") {
-//     // The file could not be read
-//   }
-// }
