@@ -75,7 +75,7 @@
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-lg-4">
-												Enable Environment checker to discover a json file in the root of the webserver.
+												Enable Domain visualizer to discover a json file in the root of the webserver.
 												this file has to be called chck-domain.json
 											</div>
 											<div class="col-lg-4">
@@ -88,9 +88,12 @@
 												 {
 													"backgroundColor": "#ff0000",
 													"custom_html": false,
-													"height": "50px",
-													"name": "Production",
+													"fade": true,
+													"height": "25px",
+													"name": "Chrome extension plugin test env",
+													"position": "fixed",
 													"textColor": "#ffffff",
+													"textSize": "1em",
 													"width": "100%"
 												}
 												</code>
@@ -120,40 +123,58 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Name</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" id="project" placeholder="Example: Project test" required>
+								<input type="text" class="form-control" id="project" placeholder="Example: Project test">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">URL</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" id="url" placeholder="Example: http://192.168.178.230" required>
+								<input type="text" class="form-control" id="url" placeholder="Example: http://192.168.178.230">
 							</div>
 						</div>	
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Background color</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control color-box" id="backgroundcolor" placeholder="#997822" required>
+								<input type="text" class="form-control color-box" id="backgroundcolor" placeholder="#997822">
 							</div>
 							<label class="col-sm-2 control-label">Text color</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control color-box" id="textcolor" placeholder="#997822" required>
+								<input type="text" class="form-control color-box" id="textcolor" placeholder="#997822">
 							</div>
 						</div>	
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Height</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="height" placeholder="50px" required>
+								<input type="text" class="form-control" id="height" placeholder="50px">
 							</div>
 							<label class="col-sm-3 control-label">Width</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="width" placeholder="100%" required>
+								<input type="text" class="form-control" id="width" placeholder="100%">
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-2 control-label">Position type</label>
+							<div class="col-sm-3">
+							<select class="form-control" id="position">
+								<option>absolute</option>
+								<option>fixed</option>
+							</select>
+						</div>	
+						<div class="form-group">
 							<label class="col-sm-2 control-label">Text size</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="textsize" placeholder="1em" required>
+								<input type="text" class="form-control" id="textsize" placeholder="1em">
+							</div>				
+						</div>
+						<div class="form-group">			
+							<label data-toggle="tooltip" class="col-sm-2 control-label">Fade in/out</label>
+							<div class="checkbox col-sm-8">
+								<input type="checkbox" id="fade">
+								<div class="col-sm-20">
+							Check this if you want to fade in/out the html inserted into the dom when you scroll.
 							</div>
+							</div>
+						</div>
 						</div>
 						<div class="form-group" id="custom-html-group">
 							<label class="col-sm-2 control-label">HTML</label>
@@ -161,7 +182,6 @@
 								<textarea  class="form-control" id="custom_html" cols="50" rows="5"></textarea>
 							</div>
 						</div>
-						
 					</form>
 				</div>
 				<div class="modal-footer">

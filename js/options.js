@@ -10,7 +10,9 @@ function save_options() {
           'name' : $('#project').val(),
           'height': $('#height').val(),
           'width' : $('#width').val(),
-          'custom_html' : $("#enableCustomHtml").is(':checked') ? JSON.stringify($('#custom_html').val()) : false
+          'custom_html' : $("#enableCustomHtml").is(':checked') ? JSON.stringify($('#custom_html').val()) : false,
+          'fade' : $('#fade').is(':checked') ? true : false,
+          'position' : $('#position option:selected' ).text()
       };
     
     chrome.storage.sync.set({sites: sites}, function () {
@@ -77,6 +79,8 @@ function showEditModal(key, entry) {
   $('#height').val(entry.height);
   $('#width').val(entry.width);
   $('#save').html('Save');
+  $('#fade').prop('checked', entry.fade);
+  $('#position').val(entry.position);
   $('#add-dmn-lbl').text('Edit domain');
 
   if(entry.custom_html != false) {
@@ -255,6 +259,8 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
     $('#save').html('Add');
     $('#custom-html-group').hide();
     $('#add-dmn-lbl').text('Add domain');
+    $('#fade').prop('checked', false);
+    $('#position option:first').attr('selected','selected');
 
     makeFieldReadonly(false);
     // Reset background colors input field.
