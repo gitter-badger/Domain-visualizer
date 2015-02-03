@@ -1,5 +1,5 @@
 {
-    "name": "Domain visualizer - Beta",
+    "name": "Domain visualizer",
     "version": "1.0",
     "description": "Monitors and visualize domains.",
     "browser_action":	{
