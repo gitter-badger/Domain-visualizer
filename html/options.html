@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Environment checker options</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap -->
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/colpick.css"/>
+	<link href="../css/custom.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div style="text-align: center;">
+					<img height="250px" width="250px" src="../img/icon_512x512.png"/>
+					<h4>Domain visualizer</h4>
+					<hr>
+					© 2015 Maikel Bollemeijer
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="thumbnail">
+					<div class="caption-full">
+						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="headingOne">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											Monitored domains
+										</a>
+									</h4>
+								</div>
+								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+									<div class="panel-body">
+										<button id="add-env-btn" class="btn btn-success pull-right" data-toggle="modal" data-target="#add-env-modal">+
+										</button>
+										<button class="btn btn-primary pull-right" id="button-export">
+											<span class="glyphicon glyphicon-export" aria-hidden="true"></span>
+											Export
+										</button>
+										<button class="btn btn-primary pull-right" id="button-import">
+
+											<span class="glyphicon glyphicon-import" aria-hidden="true"></span>
+											Import
+										</button>
+
+										<table class="table table-striped">	
+											<thead>
+												<th>Name</th>
+												<th>URL</th>
+												<th>&nbsp;</th>
+											</thead>
+											<tbody id="table-body">
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="caption-full">
+						<div class="panel-group" id="options" role="tablist" aria-multiselectable="true">
+							<div class="panel panel-default">
+								<div class="panel-heading" role="tab" id="options">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#options" href="#optionsPanel" aria-expanded="true" aria-controls="collapseOne">
+											Options
+										</a>
+									</h4>
+								</div>
+								<div id="optionsPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="options">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-lg-4">
+												Enable Domain visualizer to discover a json file in the root of the webserver.
+												this file has to be called chck-domain.json
+											</div>
+											<div class="col-lg-4">
+												<input type="checkbox" id="option-root-disc"> Enable root discovery
+											</div>
+											<div class="col-lg-4">
+												<b>Example:</b><br/>
+												chck-domain.json<br/>
+												<code>
+												 {
+													"backgroundColor": "#ff0000",
+													"custom_html": false,
+													"fade": true,
+													"height": "25px",
+													"name": "Chrome extension plugin test env",
+													"position": "fixed",
+													"textColor": "#ffffff",
+													"textSize": "1em",
+													"width": "100%"
+												}
+												</code>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<!-- /.container -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="add-env-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="add-dmn-lbl">Add domain</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Name</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="project" placeholder="Example: Project test">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">URL</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="url" placeholder="Example: http://192.168.178.230">
+							</div>
+						</div>	
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Background color</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control color-box" id="backgroundcolor" placeholder="#997822">
+							</div>
+							<label class="col-sm-2 control-label">Text color</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control color-box" id="textcolor" placeholder="#997822">
+							</div>
+						</div>	
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Height</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="height" placeholder="50px">
+							</div>
+							<label class="col-sm-3 control-label">Width</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="width" placeholder="100%">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Position type</label>
+							<div class="col-sm-3">
+							<select class="form-control" id="position">
+								<option>absolute</option>
+								<option>fixed</option>
+							</select>
+						</div>	
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Text size</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="textsize" placeholder="1em">
+							</div>				
+						</div>
+						<div class="form-group">			
+							<label data-toggle="tooltip" class="col-sm-2 control-label">Fade in/out</label>
+							<div class="checkbox col-sm-8">
+								<input type="checkbox" id="fade">
+								<div class="col-sm-20">
+							Check this if you want to fade in/out the html inserted into the dom when you scroll.
+							</div>
+							</div>
+						</div>
+						</div>
+						<div class="form-group" id="custom-html-group">
+							<label class="col-sm-2 control-label">HTML</label>
+							<div class="col-sm-8">
+								<textarea  class="form-control" id="custom_html" cols="50" rows="5"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<label class="pull-left">Enable custom HTML</label><input class="col-sm-2 pull-left" type="checkbox" id="enableCustomHtml"/>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-success" data-dismiss="modal" id="save">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade bs-example-modal-lg" id="modal-impExp" tabindex="-1" role="dialog"  aria-hidden="true">
+	  <div class="modal-dialog modal-mm">
+	    <div class="modal-content">
+	    <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="impExp-label">Export</h4>
+        </div>
+	      <div class="modal-body" id="modal-impExp-body">
+			<table class="table table-striped">			
+				<thead>
+					<th><input type="checkbox" id="checkbox-domains-all"/></th>
+					<th>Name</th>
+					<th>URL</th>
+				</thead>
+				<tbody id="table-body-export">
+				</tbody>
+			</table>
+        </div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button class="btn btn-success" data-dismiss="modal" id="button-download">Export / Download</button>
+			<button id="button-import-json" class="btn btn-success" style="display: none">Import</button>
+		</div>
+	    </div>
+	  </div>
+	</div>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script src="../js/colpick.js" type="text/javascript"></script>
+	<script src="../js/options.js"></script>
+</body>
+</html>

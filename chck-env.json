@@ -1,0 +1,8 @@
+{
+    "backgroundColor": "red",
+    "textColor" : "#ffffff",
+    "name": "test",
+    "custom_html": false,
+    "height": "50px",
+    "width": "100%"
+}
