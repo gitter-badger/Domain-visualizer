@@ -1,16 +1,34 @@
 chrome.storage.sync.get({"option-root-disc": false}, function(result) {
-	var discover = result["option-root-disc"];
-	var baseUrl = stripUrl(document.URL);;
-	if(discover) {
-	    $.getJSON(baseUrl +'/chck-domain.json', function(d) {
-	        insertHtmlInDom(d);
-	    }).fail( function(d, textStatus, error) {
-	        checkLocalStorage();
-	    });
-	} else {
-		checkLocalStorage();
+		var discover = result["option-root-disc"];
+		var baseUrl = stripUrl(document.URL);;
+		if(discover) {
+		    $.getJSON(baseUrl +'/chck-domain.json', function(d) {
+		        insertHtmlInDom(d);
+		    }).fail( function(d, textStatus, error) {
+		        run();
+		    });
+		} else {
+			run();
+		}
+	});
+
+function run(){
+	if ( $( "body" ).length <= 0 ) {
+		(function() {
+	      var observer = new MutationObserver(function() {
+	        if (document.body) {
+	          // It exists now
+	          checkLocalStorage()
+	          observer.disconnect();
+	        }
+	      });
+	      observer.observe(document.documentElement, {childList: true});
+	    })();
 	}
-});
+	else {
+		checkLocalStorage()
+	}
+}
 
 function checkLocalStorage() {
 	chrome.storage.sync.get({ sites: {} }, function(items) {
