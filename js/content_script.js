@@ -32,11 +32,10 @@ function run(){
 
 function checkLocalStorage() {
 	chrome.storage.sync.get({ sites: {} }, function(items) {
-	console.log(items);
-	 var url = document.URL.split('/')[2].replace('www.', '');
+	 var url = document.URL;
 	 $.each(items.sites, function(key, value) {
-		 var storedEnvKey = key.split('/')[2].replace('www.','');
-		 if(url == storedEnvKey) {
+		 if(stripUrl(url) == stripUrl(key)) {
+		 	 console.log(key);
 		     insertHtmlInDom(value);
 		     return false;
 		 }
@@ -45,13 +44,14 @@ function checkLocalStorage() {
 }
 
 function stripUrl(url) {
-	var splitedUrl = url.split('/');
-	return splitedUrl[0] + "//" + splitedUrl[2];
+	var regexedUrl = url.replace(/(?:https?:\/\/)?(?:www\.)?(.*)\/?$/i, '$1');
+	var splitedUrl = regexedUrl.split('/');
+	console.log(splitedUrl[0]);
+	return splitedUrl[0];
 }
 
 function insertHtmlInDom(param)
 {
-	console.log(param);
 	if(param.hasOwnProperty('fade') && param.fade == true) {
 		$(document).scroll(function() {
 			if($(this).scrollTop() > 5){

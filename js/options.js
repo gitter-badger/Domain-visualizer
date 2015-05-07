@@ -272,6 +272,8 @@ $('#add-env-modal').on('hidden.bs.modal', function () {
 $('#modal-impExp').on('hidden.bs.modal', function() {
     $('#modal-impExp-body').empty();
     $('#impExp-label').text('Export');
+    $('#button-import-json').hide();
+    $('#button-download').show();
     $('#modal-impExp-body').append('<table class="table table-striped"><thead><th><input type="checkbox" id="checkbox-domains-all"/></th><th>Name</th><th>URL</th><tbody id="table-body-export"></tbody></table>');
 });
 
