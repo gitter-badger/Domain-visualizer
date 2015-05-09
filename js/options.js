@@ -170,7 +170,6 @@ $('#save').on('click', function(e) {
 
 $('#button-export').on('click', function(e) {
     e.preventDefault();
-    console.log('export');
     $('#modal-impExp').modal('show');
         // Empty table
     $('#table-body-export').empty();
@@ -218,7 +217,7 @@ $('#button-download').on('click', function() {
 $('#option-root-disc').click(function() {
     chrome.storage.sync.set({'option-root-disc': this.checked}, function() {
         chrome.storage.sync.get({"option-root-disc" : false}, function(result) {
-            console.log(result);
+            
         });
     });
 });
