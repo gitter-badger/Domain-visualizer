@@ -35,7 +35,6 @@ function checkLocalStorage() {
 	 var url = document.URL;
 	 $.each(items.sites, function(key, value) {
 		 if(stripUrl(url) == stripUrl(key)) {
-		 	 console.log(key);
 		     insertHtmlInDom(value);
 		     return false;
 		 }
@@ -45,8 +44,8 @@ function checkLocalStorage() {
 
 function stripUrl(url) {
 	var regexedUrl = url.replace(/(?:https?:\/\/)?(?:www\.)?(.*)\/?$/i, '$1');
+	var regexedUrl = regexedUrl.replace(/:{1}\d{1,}/i, '');
 	var splitedUrl = regexedUrl.split('/');
-	console.log(splitedUrl[0]);
 	return splitedUrl[0];
 }
 
